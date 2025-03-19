@@ -1,10 +1,10 @@
-const mysql = require('mysql2')
+import mysql from 'mysql2';
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'blog_db'
+    host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'root',
+  database: process.env.DB_NAME,
 }) 
 
 connection.connect((err) =>{
@@ -12,4 +12,4 @@ connection.connect((err) =>{
     console.log('connected to mysql')
 })
 
-module.exports = connection
+export default connection;

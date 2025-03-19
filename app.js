@@ -1,22 +1,32 @@
-const express = require('express')
-const app = express()
-const port = 3001
-const postRouter = require('./routers/postRouter');
-const endPointMiddleware = require('./middlewares/endPointMiddleware')
-const errorHandler = require('./middlewares/errorHandler')
+import 'dotenv/config'
 
-app.use(express.static('./public/imgs'));
+import express from 'express'
+
+const app = express()
+
+const port = process.env.SERVER_PORT || 3005;
+
+import movieRouter from './routers/movieRouter.js'
+
+import ImagePath from './middlewares/imagePath.js';
+
+// const postRouter = require('./routers/postRouter');
+// const endPointMiddleware = require('./middlewares/endPointMiddleware')
+// const errorHandler = require('./middlewares/errorHandler')
+
+app.use(express.static('../public'));
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-res.send('QUESTO è IL SERVER DEL BLOG')
-})
+// app.get('/movies', (req, res) => {
+// res.send('QUESTO è IL SERVER DI MOVIES')
+// })
 
-app.use("/api/posts", postRouter)
+app.use("/movies", movieRouter)
 
-app.use(endPointMiddleware)
-app.use(errorHandler)
+app.use( ImagePath )
+// app.use(endPointMiddleware)
+// app.use(errorHandler)
 
 app.listen(port, () => {
 console.log(`Example app listening on port ${port}`)
